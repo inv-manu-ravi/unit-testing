@@ -12,6 +12,8 @@ import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import com.example.unit.testing.entity.User;
 import com.example.unit.testing.form.UserForm;
 import com.example.unit.testing.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -61,5 +63,23 @@ public class RegisterTest {
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm);
         Assertions.assertEquals(0, violations.size());
+    }
+
+    @Test
+    void testFirstNameIsRequiredGPT() {
+        
+        UserForm userForm = new UserForm();
+        userForm.setFirstName("null");
+        userForm.setLastName("Ravi");
+        userForm.setEmail("asasas@dgdg.dgdg");
+        
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm);
+
+        Assertions.assertEquals(1, violations.size());
+        ConstraintViolation<UserForm> violation = violations.iterator().next();
+        Assertions.assertEquals("First name is required", violation.getMessage());
+        Assertions.assertEquals("firstName", violation.getPropertyPath().toString());
     }
 }
