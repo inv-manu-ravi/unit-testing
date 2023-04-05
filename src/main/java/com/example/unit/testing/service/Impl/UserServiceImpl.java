@@ -20,11 +20,11 @@ public class UserServiceImpl implements UserService {
 
 @Override
 public ResponseEntity<UserView> add(@Valid UserForm userForm) {
-    User user = new User(userForm.getFirstName(), userForm.getLastName(), userForm.getEmail());
+    User user = new User(userForm.getFirstName(), userForm.getLastName(), userForm.getEmail(),userForm.getPassword());
     User savedUser = userRepository.save(user);
     UserView userView = new UserView(savedUser);
+    logger.info("Email = {} ", userForm.getEmail());
     logger.info("User view: {}", userView);
-
     return ResponseEntity.status(HttpStatus.CREATED).body(userView);
 }
 }

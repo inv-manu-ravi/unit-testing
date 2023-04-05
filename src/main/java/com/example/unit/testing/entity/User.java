@@ -10,7 +10,8 @@ import lombok.Data;
 public class User {
 
     @Id // Specifies the primary key property
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Specifies that the primary key should be generated automatically by the database
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Specifies that the primary key should be generated
+                                                        // automatically by the database
     private Long id;
 
     @Column(nullable = false) // Specifies that this column cannot be null
@@ -19,16 +20,19 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false)
+    private String password;
+
     @Column(nullable = false, unique = true) // Specifies that this column cannot be null and should be unique
     private String email;
 
-    public User(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, String email,String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password=password;
     }
 
     public User() {
     }
 }
-

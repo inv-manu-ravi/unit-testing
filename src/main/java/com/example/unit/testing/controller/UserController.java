@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.unit.testing.form.UserForm;
 import com.example.unit.testing.service.UserService;
+import com.example.unit.testing.view.UserView;
 
 @RestController
 @RequestMapping("/register")
@@ -20,7 +21,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserForm userForm) {
+    public ResponseEntity<UserView> registerUser(@Valid @RequestBody UserForm userForm) {
            return userService.add(userForm);
         
     }
