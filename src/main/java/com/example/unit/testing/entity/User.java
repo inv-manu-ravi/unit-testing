@@ -4,8 +4,6 @@ import javax.persistence.*;
 
 import lombok.Data;
 
-import javax.persistence.*;
-
 @Entity // Specifies that this class is an entity
 @Data
 @Table(name = "users") // Specifies the name of the database table that this entity maps to

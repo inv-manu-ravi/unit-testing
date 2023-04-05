@@ -1,6 +1,7 @@
 package com.example.unit.testing.service.Impl;
 import javax.validation.Valid;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,30 +11,20 @@ import com.example.unit.testing.entity.User;
 import com.example.unit.testing.form.UserForm;
 import com.example.unit.testing.repository.UserRepository;
 import com.example.unit.testing.service.UserService;
-
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    // @Override
-    // public User save(UserForm userForm) {
-    //     return new UserView(userRepository.save(new User(
-    //         form.getName(),
-    //         form.getEmail(),
-    //         passwordEncoder.encode(form.getPassword())
-    // )));
-    // }
-
-  
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 @Override
 public ResponseEntity<UserView> add(@Valid UserForm userForm) {
     User user = new User(userForm.getFirstName(), userForm.getLastName(), userForm.getEmail());
     User savedUser = userRepository.save(user);
     UserView userView = new UserView(savedUser);
-    System.out.println(userView);
+    logger.info("User view: {}", userView);
+
     return ResponseEntity.status(HttpStatus.CREATED).body(userView);
 }
 }
